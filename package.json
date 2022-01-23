@@ -1,0 +1,16 @@
+{
+  "name": "instaclone",
+  "version": "0.0.1",
+  "description": "El servidor de la app Instaclone",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./index.js"
+  },
+  "author": "Gabriel Torres",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.2",
+    "dotenv": "^14.2.0",
+    "mongoose": "^6.1.7"
+  }
+}
