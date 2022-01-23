@@ -40,3 +40,6 @@ const UserSchema = Schema({
         default: Date.now()
     }
 });
+
+
+module.exports = mongoose.model("User", UserSchema); 

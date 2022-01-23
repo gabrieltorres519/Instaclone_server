@@ -5,8 +5,6 @@ const resolvers = require("./gql/resolver");
 require("dotenv").config({ path: ".env"});
 
 
-
-
 mongoose.connect(process.env.BBDD,{
     useNewUrlParser: true,
     useUnifiedTopology: true
