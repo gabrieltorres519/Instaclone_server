@@ -13,7 +13,7 @@ mongoose.connect(process.env.BBDD,{
         console.log("Error de conexion");
         console.log(err);
     }else{
-       // console.log("Conexion correcta");
+       //console.log(process.env.BBDD);
        server();
     }
 });
