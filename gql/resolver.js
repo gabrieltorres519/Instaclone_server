@@ -18,7 +18,7 @@ const resolvers = {
         login: (_, {input}) => userController.login(input),    
             // console.log(newUser);
             // return null;
-        updateAvatar: (_,{file}) => userController.updateAvatar(file),
+        updateAvatar: (_,{file},ctx) => userController.updateAvatar(file,ctx),
         
     }
 };

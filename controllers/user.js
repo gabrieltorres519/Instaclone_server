@@ -76,11 +76,13 @@ async function getUser(id, username) {
     return user;
 }
 
-async function updateAvatar(file){
+async function updateAvatar(file, ctx){
     const {createReadStream, mimetype} = await file;
     const extension = mimetype.split("/")[1];
     const imageName = `avatar/avt.${extension}`;
     const fileData = createReadStream();
+
+    console.log(file);
 
     try {
         const result = await awsUploadImage(fileData, imageName);
