@@ -28,26 +28,27 @@ async function server() {
     const serverApollo = new ApolloServer({
         typeDefs,
         resolvers,
-        constext: ({req}) => {
-            //console.log(req.headers.authorization);
-            const token = req.headers.authorization;
-            console.log("Header recibido es: " + token);
-            if (token){
-                try {
-                    const user = jwt.verify(
-                        token.replace("Bearer ",""),
-                        process.env.SECRET_KEY
-                    );
-                    return{
-                        user,
-                    }
-                } catch (error) {
-                    console.log("### ERROR ###");
-                    console.log(error);
-                    throw new Error("Token Inválido");
-                }
-            }
-        }
+         context: ({req}) => {
+             //console.log(req.headers.authorization);
+              const token = req.headers.authorization;
+              
+               console.log("Header recibido es: " + token);
+               if (token){
+                   try {
+                       const user = jwt.verify(
+                           token.replace("Bearer ",""),
+                           process.env.SECRET_KEY
+                       );
+                       return{
+                           user,
+                       }
+                   } catch (error) {
+                       console.log("### ERROR ###");
+                       console.log(error);
+                       throw new Error("Token Inválido");
+                   }
+               }
+         }
     }); 
 
 

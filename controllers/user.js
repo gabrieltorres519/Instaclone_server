@@ -77,22 +77,25 @@ async function getUser(id, username) {
 }
 
 async function updateAvatar(file, ctx){
-    const {createReadStream, mimetype} = await file;
-    const extension = mimetype.split("/")[1];
-    const imageName = `avatar/avt.${extension}`;
-    const fileData = createReadStream();
+    //   const {createReadStream, mimetype} = await file;
+    //   const extension = mimetype.split("/")[1];
+    //   const imageName = `avatar/avt.${extension}`;
+    //   const fileData = createReadStream();
 
-    console.log(file);
+    //   console.log(file);
 
-    try {
-        const result = await awsUploadImage(fileData, imageName);
-        console.log(result);
-    } catch (error) {
-        return{
-            status: false,
-            urlAvatar: null,
-        }
-    }
+    //   try {
+    //       const result = await awsUploadImage(fileData, imageName);
+    //       console.log(result);
+    //   } catch (error) {
+    //       return{
+    //           status: false,
+    //           urlAvatar: null,
+    //       }
+    //   }
+
+    console.log("Ejecutando updateAvatar");
+    console.log(ctx);
 
     return null;
 } 
