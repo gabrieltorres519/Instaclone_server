@@ -77,28 +77,45 @@ async function getUser(id, username) {
 }
 
 async function updateAvatar(file, ctx){
-    //   const {createReadStream, mimetype} = await file;
-    //   const extension = mimetype.split("/")[1];
-    //   const imageName = `avatar/avt.${extension}`;
-    //   const fileData = createReadStream();
+    const {id} = ctx.user;
+      const {createReadStream, mimetype} = await file;
+      const extension = mimetype.split("/")[1];
+      const imageName = `avatar/${id}.${extension}`;
+      const fileData = createReadStream();
 
-    //   console.log(file);
+      console.log(file);
 
-    //   try {
-    //       const result = await awsUploadImage(fileData, imageName);
-    //       console.log(result);
-    //   } catch (error) {
-    //       return{
-    //           status: false,
-    //           urlAvatar: null,
-    //       }
-    //   }
+      try {
+          const result = await awsUploadImage(fileData, imageName);
+          await User.findByIdAndUpdate(id,{avatar: result});
+          //console.log(result);
+          return{
+              status: true,
+              urlAvatar: result,
+          }
+      } catch (error) {
+          return{
+              status: false,
+              urlAvatar: null,
+          }
+      }
 
-    console.log("Ejecutando updateAvatar");
-    console.log(ctx);
+    // console.log("Ejecutando updateAvatar");
+    // console.log(id);
 
-    return null;
+    // return null;
 } 
+
+async function deleteAvatar(ctx){
+    const {id} = ctx.user;
+    try {
+        await User.findByIdAndUpdate(id, { avatar: "" });
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
 
 
 module.exports = {
@@ -106,4 +123,5 @@ module.exports = {
     login,
     getUser,
     updateAvatar,
+    deleteAvatar,
 };
