@@ -2,6 +2,7 @@ const User = require("../models/user.js");
 const bcryptjs = require("bcryptjs"); 
 const jwt = require("jsonwebtoken");
 const awsUploadImage = require("../utils/aws-upload-image");
+const user = require("../models/user.js");
  
 
 function createToken(user, SECRET_KEY, expiresIn){
@@ -117,6 +118,34 @@ async function deleteAvatar(ctx){
     }
 }
 
+async function updateUser(input, ctx){
+    const {id} = ctx.user;
+
+    try {
+        if(input.currentPassword && input.newPassword){
+            //Cambiar contraseña
+            const userFound = await User.findById(id);
+            const passwordSucess = await bcryptjs.compare(
+                input.currentPassword,
+                userFound.password,
+            );
+
+            if(!passwordSucess) throw new Error("Contraseña incorrecta");
+
+            const salt = await bcryptjs.genSaltSync(10);
+            const newPasswordCrypt= await bcryptjs.hash(input.newPassword, salt);
+
+            await User.findByIdAndUpdate(id, {password: newPasswordCrypt} );
+        }else{
+            await User.findByIdAndUpdate(id, input)
+        }
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 
 module.exports = {
     register,
@@ -124,4 +153,5 @@ module.exports = {
     getUser,
     updateAvatar,
     deleteAvatar,
+    updateUser,
 };
