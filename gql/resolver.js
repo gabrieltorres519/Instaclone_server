@@ -3,6 +3,7 @@
 
 const userController = require("../controllers/user.js");
 const {GraphQLUpload} = require("graphql-upload"); 
+const followController = require("../controllers/follow");
 
 
 const resolvers = {
@@ -11,6 +12,9 @@ const resolvers = {
         // User
         getUser: (_, {id,username}) => userController.getUser(id, username),
         search: (_, {search}) => userController.search(search),
+
+        //Follow
+        isFollow: (_,{username},ctx) => followController.isFollow(username, ctx), 
     },
 
     Mutation: {
@@ -22,6 +26,11 @@ const resolvers = {
         updateAvatar: (_,{file},ctx) => userController.updateAvatar(file,ctx),
         deleteAvatar: (_,{}, ctx) => userController.deleteAvatar(ctx),
         updateUser: (_, { input }, ctx) => userController.updateUser(input, ctx),
+
+
+        //Follow
+        follow: (_,{username}, ctx) => followController.follow(username,ctx), 
+        unFollow: (_,{username},ctx) => followController.unFollow(username, ctx), 
         
         
     }
