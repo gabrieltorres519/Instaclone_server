@@ -51,8 +51,37 @@ async function unFollow(username, ctx){
 
 }
 
+async function getFollowers(username){
+    const user = await User.findOne({username});
+    const followers = await Follow.find({follow: user._id}).populate("idUser");
+    
+    const followersList = [];
+    for await (const data of followers){
+        followersList.push(data.idUser);
+    };
+
+
+
+    return followersList;
+}
+
+async function getFolloweds(username){
+    // console.log(username);
+    const user = await User.findOne({username});
+    const followeds = await Follow.find({idUser: user._id}).populate("follow");
+
+    const followedsList = [];
+    for await (const data of followeds){
+        followedsList.push(data.follow);
+    }
+
+    return followedsList;
+}
+
 module.exports = {
     follow,
     isFollow,
     unFollow,
+    getFollowers,
+    getFolloweds,
 }
