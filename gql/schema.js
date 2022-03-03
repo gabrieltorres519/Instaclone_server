@@ -27,6 +27,12 @@ const typeDefs = gql`
         urlAvatar: String
     }
 
+    type Publish {
+        status: Boolean
+        urlFile: String
+    }
+
+
     input UserInput {
         name: String!
         username: String!
@@ -60,7 +66,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        #User
+        # User
         register(input: UserInput): User 
         login(input: LoginInput): Token
         updateAvatar(file: Upload!): UpdateAvatar
@@ -70,6 +76,9 @@ const typeDefs = gql`
         # Follow
         follow(username: String!): Boolean
         unFollow(username: String!): Boolean
+
+        # Publication
+        publish(file: Upload): Publish
     } 
 `;
 
