@@ -1,4 +1,5 @@
 const Publication = require("../models/publication");
+const User = require("../models/user");
 const awsUploadImage = require("../utils/aws-upload-image");
 const {v4: uuidv4} = require("uuid");
 
@@ -38,6 +39,19 @@ async function publish(file,ctx){
     return null;
 }
 
+async function getPublications(username){
+    // console.log(username);
+    // return null;
+    const user = await User.findOne({username});
+    if(!user) throw new Error ("Usuario no encontrado");
+
+    const publications = await Publication.find().where({ idUser: user._id}).sort({createAt: -1});
+
+    // console.log("Los datos del usuario son: " + user);
+    return publications;
+}
+
 module.exports = {
     publish,
+    getPublications,
 };
