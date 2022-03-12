@@ -5,6 +5,7 @@ const userController = require("../controllers/user.js");
 const {GraphQLUpload} = require("graphql-upload"); 
 const followController = require("../controllers/follow");
 const publicationController = require("../controllers/publication");
+const commentController = require("../controllers/comment");
 
 
 const resolvers = {
@@ -21,6 +22,9 @@ const resolvers = {
         
         //Publication
         getPublications: (_,{username}) => publicationController.getPublications(username), 
+
+        //Comment
+        getComments: (_,{idPublication}) => commentController.getComments(idPublication),
     },
 
     Mutation: {
@@ -40,6 +44,9 @@ const resolvers = {
 
         //Publication
         publish: (_,{file}, ctx) => publicationController.publish(file, ctx),
+
+        //Comment
+        addComment: (_, {input}, ctx) =>  commentController.addComment(input, ctx),
         
         
     }
